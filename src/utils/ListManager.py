@@ -39,9 +39,16 @@ class ListManager:
 
                     return data
 
+
                 else:
                     
                     print(f'Unsuported file type: {file_extension}')
+
+                print(type(data))
+
+                print(data)
+
+                return data
 
         except Exception as err:
 

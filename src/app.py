@@ -1,21 +1,51 @@
+import os
+
 from flask import Flask, request, jsonify, render_template
+
+from werkzeug.utils import secure_filename
+
+from utils.FileManager import FileManager
+from utils.ListManager import ListManager
 from utils.PhoneNumberCleaner import PhoneNumberCleaner
 
+
 app = Flask(__name__)
+
+UPLOAD_FOLDER = 'src/uploads'
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
     if request.method == 'POST':
 
-        phone_number = request.form['phone_number']
-        phone_cleaner = PhoneNumberCleaner(phone_number)
+
+        phone_list = request.files['phone-list']
+
+        file_manager = FileManager(phone_list)
+
+        if file_manager.verify_existance_on_uploads():
+
+            print(f'{phone_list.name} is already in the database.')
+
+            return render_template('index.html')
+        
+        filename = secure_filename(phone_list.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        phone_list.save(file_path)
+        
+        list_manager = ListManager(file_path)
+
+        print(phone_list.content_type)
 
         try:
 
-            cleaned_number = phone_cleaner.clean_number()
+            cleaned_list = list_manager.read_file()
 
-            return (jsonify({'cleaned_number': cleaned_number}), 200)
+            return f'<h1>{cleaned_list}<h1>'
+
+            #return (jsonify({'cleaned_number': cleaned_list}), 200)
         
         except ValueError as e:
 
@@ -23,6 +53,7 @@ def index():
     else:
 
         return render_template('index.html')
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

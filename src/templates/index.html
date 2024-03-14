@@ -13,9 +13,11 @@
 
     <main>
         <section>
-            <form method="POST">
-                <label for="phone_number">Enter Phone Number:</label>
-                <input type="tel" name="phone_number" id="phone_number" placeholder="phone number goes here..." required>
+            <form method="POST" enctype="multipart/form-data">
+                <label for="phone-list">
+                    Files
+                    <input type="file" name="phone-list" id="phone-list" required>
+                </label>
                 <button type="submit">Submit</button>
             </form>
         </section>
