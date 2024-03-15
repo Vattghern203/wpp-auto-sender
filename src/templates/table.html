@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yonaka@1.1/dist/yonaka.min.css">
+    <title>AutoWPP</title>
+</head>
+
+<body>
+    {% if cleaned_numbers %}
+    <h2>Cleaned Phone Numbers</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for number in cleaned_numbers %}
+            <tr>
+                <td>{{ number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>

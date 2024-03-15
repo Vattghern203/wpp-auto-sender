@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yonaka@1.1/dist/yonaka.min.css">
-    <title>Document</title>
+    <title>AutoWPP</title>
+
+    <style>
+        table { width: 100%;}
+
+        td {
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <h1>AutoWPP</h1>
@@ -21,8 +31,33 @@
                 <button type="submit">Submit</button>
             </form>
         </section>
+
+        {% if cleaned_numbers %}
+        <section>
+            <h2>Cleaned Phone Numbers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for element in cleaned_numbers %}
+                    <tr>
+                        {{element}}
+                        <td>{{ element.number }}</td>
+                        <td>{{ element.message }}</td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        {% endif %}
     </main>
 
     <footer></footer>
 </body>
+
 </html>

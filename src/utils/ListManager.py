@@ -23,19 +23,11 @@ class ListManager:
 
                     data = [row for row in reader]
 
-                    print(type(data))
-
-                    print(data)
-
                     return data
                 
                 elif file_extension == 'json':
 
                     data = json.load(file)
-
-                    print(type(data))
-
-                    print(data)
 
                     return data
 

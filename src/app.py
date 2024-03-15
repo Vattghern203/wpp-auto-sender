@@ -20,7 +20,6 @@ def index():
 
     if request.method == 'POST':
 
-
         phone_list = request.files['phone-list']
 
         file_manager = FileManager(phone_list)
@@ -43,13 +42,19 @@ def index():
 
             cleaned_list = list_manager.read_file()
 
-            return f'<h1>{cleaned_list}<h1>'
+            file_manager.remove_file()
+
+            return render_template('index.html', cleaned_numbers=cleaned_list)
 
             #return (jsonify({'cleaned_number': cleaned_list}), 200)
         
         except ValueError as e:
 
             return jsonify({'error': str(e)}), 400
+        
+        except Exception as e:
+
+            return jsonify({'error': str(e), 'message': 'An unexpected error has occured'})
     else:
 
         return render_template('index.html')
