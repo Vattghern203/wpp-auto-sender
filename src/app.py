@@ -8,7 +8,6 @@ from utils.FileManager import FileManager
 from utils.ListManager import ListManager
 from utils.PhoneNumberCleaner import PhoneNumberCleaner
 
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'src/uploads'
@@ -36,13 +35,25 @@ def index():
         
         list_manager = ListManager(file_path)
 
-        print(phone_list.content_type)
+        print('list', phone_list.headers)
 
         try:
 
-            cleaned_list = list_manager.read_file()
+            list_data = list_manager.read_file()
+
+            print(type(list_data))
 
             file_manager.remove_file()
+            cleaned_list = list_data
+
+            for item in list_data:
+
+                print(item.get('number'))
+
+                item['number'] = PhoneNumberCleaner(item.get('number')).clean_number()
+
+            print(cleaned_list)
+
 
             return render_template('index.html', cleaned_numbers=cleaned_list)
 

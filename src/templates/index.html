@@ -4,15 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yonaka@1.1/dist/yonaka.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yonaka@1.1.27/dist/yonaka.min.css">
     <title>AutoWPP</title>
 
     <style>
-        table { width: 100%;}
+        table {
+            table-layout: fixed;
+            width: 100%;
+            height: fit-content;
+            border-collapse: collapse;
+        }
 
         td {
+            vertical-align: top;
             text-align: center;
+            border-radius: 0;
+            padding-block: var(--md);
+            
+            &:not(:last-child) {
+
+                border-inline-end: 1px solid var(--text);
+            }
         }
+
+        tr {
+            padding-block: var(--md);
+        }
+
+        label { width: 100%;}
     </style>
 </head>
 
@@ -25,7 +44,7 @@
         <section>
             <form method="POST" enctype="multipart/form-data">
                 <label for="phone-list">
-                    Files
+                    Upload a CSV or JSON here
                     <input type="file" name="phone-list" id="phone-list" required>
                 </label>
                 <button type="submit">Submit</button>
@@ -34,7 +53,19 @@
 
         {% if cleaned_numbers %}
         <section>
+            <form method="POST">
+                <label for="end-phone">
+                    Notification Number <small>(optional)</small>
+                </label>
+                <input id="end-phone" type="tel" required placeholder="Number to send a message when the process is finished">
+                <button type="submit">OK</button>
+            </form>
+        </section>
+        <section>
             <h2>Cleaned Phone Numbers</h2>
+
+            <hr>
+
             <table>
                 <thead>
                     <tr>
@@ -42,10 +73,10 @@
                         <th>Message</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {% for element in cleaned_numbers %}
                     <tr>
-                        {{element}}
                         <td>{{ element.number }}</td>
                         <td>{{ element.message }}</td>
                     </tr>

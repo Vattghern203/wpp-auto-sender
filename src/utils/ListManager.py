@@ -31,7 +31,6 @@ class ListManager:
 
                     return data
 
-
                 else:
                     
                     print(f'Unsuported file type: {file_extension}')
@@ -45,10 +44,4 @@ class ListManager:
         except Exception as err:
 
             print(err)
-            
-
-list_manager = ListManager('D:/Biblioteca/Downloads/annual-enterprise-survey-2021-financial-year-provisional-csv.csv').read_file()
-
-print('JSON')
-
-manager = ListManager('D:/Biblioteca/Downloads/sample1.json').read_file()
+print(ListManager('D:\Biblioteca\Documentos\Códigos\_bots\wpp-auto-sender\sample.csv').read_file())
